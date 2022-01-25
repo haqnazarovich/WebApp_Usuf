@@ -1,0 +1,194 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model WebApp_Usuf.Models.Lib
+
+<div class="tab-content mta">
+    <h1>Расчёт оптимального состава многокомпонентной шихты </h1>
+    <form action="/Home/Index" method="post">
+        <div class="row d-flex align-items-center pt-1 pb-5">
+            <div class="col-lg-10">
+                <table class="table table-bordered">
+                    <tr align="center">
+                        <th rowspan="2" class="text-center">Компонент шихты</th>
+                        <th colspan="2" class="text-center">Химический состав, %</th>
+                        <th rowspan="2" class="text-center">Стоимость, усл.ед. / т</th>
+                        @if (Model.isShow == true)
+                        {
+                            <th colspan="3" class="text-center">
+                                Ограничение по компонентам шихты в<br>
+                                конечном сплаве
+                            </th>
+                        }
+                        else
+                        {
+                            <th colspan="2" class="text-center">
+                                Ограничение по компонентам шихты в<br>
+                                конечном сплаве
+                            </th>
+                        }
+                        @if (Model.isShow == true)
+                        {
+                            <th rowspan="2" class="text-center td-color">
+                                Конечная<br>
+                                стоимость<br>
+                                усл.ед./т
+                            </th>
+                        }
+                    </tr>
+                    <tr align="center">
+                        <th class="text-center">Si</th>
+                        <th class="text-center">Mn</th>
+                        <th class="text-center">Min, %</th>
+                        <th class="text-center">Max, %</th>
+                        @if (Model.isShow == true)
+                        {
+                            <th class="text-center td-color">Факт</th>
+                        }
+                    </tr>
+                    <tr align="center">
+                        <td class="text-center">Чугун литейный</td>
+                        <td><input type="text" class="text-center" name="ChugLit_Si" value="@Model.ChugLit_Si"></td>
+                        <td><input type="text" class="text-center" name="ChugLit_Mn" value="@Model.ChugLit_Mn"></td>
+                        <td><input type="text" class="text-center" name="ChugLit_Sto" value="@Model.ChugLit_Sto"></td>
+                        <td><input type="text" class="text-center" name="ChugLit_Min" value="@Model.ChugLit_Min"></td>
+                        <td><input type="text" class="text-center" name="ChugLit_Max" value="@Model.ChugLit_Max"></td>
+                        @if (Model.isShow == true)
+                        {
+                            <td class="td-color"><input id="chugLit_Fakt" type="text" readonly class="text-center" value="@Model.ChugLit_Fakt()"></td>
+                            <td class="td-color"><input type="text" readonly class="text-center" value="@Model.ChugLit_KonSto()"></td>
+                        }
+                    </tr>
+                    <tr align="center">
+                        <td>Чугун передельный</td>
+                        <td><input type="text" class="text-center" name="ChugPer_Si" value="@Model.ChugPer_Si"></td>
+                        <td><input type="text" class="text-center" name="ChugPer_Mn" value="@Model.ChugPer_Mn"></td>
+                        <td><input type="text" class="text-center" name="ChugPer_Sto" value="@Model.ChugPer_Sto"></td>
+                        <td><input type="text" class="text-center" name="ChugPer_Min" value="@Model.ChugPer_Min"></td>
+                        <td><input type="text" class="text-center" name="ChugPer_Max" value="@Model.ChugPer_Max"></td>
+                        @if (Model.isShow == true)
+                        {
+                            <td class="td-color"><input id="chugPer_Fakt" type="text" readonly class="text-center" value="@Model.ChugPer_Fakt()"></td>
+                            <td class="td-color"><input type="text" readonly class="text-center" value="@Model.ChugPer_KonSto()"></td>
+                        }
+                    </tr>
+                    <tr align="center">
+                        <td>Чугун зеркальный</td>
+                        <td><input type="text" class="text-center" name="ChugZer_Si" value="@Model.ChugZer_Si"></td>
+                        <td><input type="text" class="text-center" name="ChugZer_Mn" value="@Model.ChugZer_Mn"></td>
+                        <td><input type="text" class="text-center" name="ChugZer_Sto" value="@Model.ChugZer_Sto"></td>
+                        <td><input type="text" class="text-center" name="ChugZer_Min" value="@Model.ChugZer_Min"></td>
+                        <td><input type="text" class="text-center" name="ChugZer_Max" value="@Model.ChugZer_Max"></td>
+                        @if (Model.isShow == true)
+                        {
+                            <td class="td-color"><input id="chugZer_Fakt" type="text" readonly class="text-center" value="@Model.ChugZer_Fakt()"></td>
+                            <td class="td-color"><input type="text" readonly class="text-center" value="@Model.ChugZer_KonSto()"></td>
+                        }
+                    </tr>
+                    <tr align="center">
+                        <td>Лом чугунный</td>
+                        <td><input type="text" class="text-center" name="LomChug_Si" value="@Model.LomChug_Si"></td>
+                        <td><input type="text" class="text-center" name="LomChug_Mn" value="@Model.LomChug_Mn"></td>
+                        <td><input type="text" class="text-center" name="LomChug_Sto" value="@Model.LomChug_Sto"></td>
+                        <td><input type="text" class="text-center" name="LomChug_Min" value="@Model.LomChug_Min"></td>
+                        <td><input type="text" class="text-center" name="LomChug_Max" value="@Model.LomChug_Max"></td>
+                        @if (Model.isShow == true)
+                        {
+                            <td class="td-color"><input id="lomChug_Fakt" type="text" readonly class="text-center" value="@Model.LomChug_Fakt()"></td>
+                            <td class="td-color"><input type="text" readonly class="text-center" value="@Model.LomChug_KonSto()"></td>
+                        }
+                    </tr>
+                    <tr align="center">
+                        <td>Лом стальной</td>
+                        <td><input type="text" class="text-center" name="LomSta_Si" value="@Model.LomSta_Si"></td>
+                        <td><input type="text" class="text-center" name="LomSta_Mn" value="@Model.LomSta_Mn"></td>
+                        <td><input type="text" class="text-center" name="LomSta_Sto" value="@Model.LomSta_Sto"></td>
+                        <td><input type="text" class="text-center" name="LomSta_Min" value="@Model.LomSta_Min"></td>
+                        <td><input type="text" class="text-center" name="LomSta_Max" value="@Model.LomSta_Max"></td>
+                        @if (Model.isShow == true)
+                        {
+                            <td class="td-color"><input id="lomSta_Fakt" type="text" readonly class="text-center" value="@Model.LomSta_Fakt()"></td>
+                            <td class="td-color"><input type="text" readonly class="text-center" value="@Model.LomSta_KonSto()"></td>
+                        }
+                    </tr>
+                    <tr align="center">
+                        <td>Возврат</td>
+                        <td><input type="text" class="text-center" name="Vozr_Si" value="@Model.Vozr_Si"></td>
+                        <td><input type="text" class="text-center" name="Vozr_Mn" value="@Model.Vozr_Mn"></td>
+                        <td><input type="text" class="text-center" name="Vozr_Sto" value="@Model.Vozr_Sto"></td>
+                        <td><input type="text" class="text-center" name="Vozr_Min" value="@Model.Vozr_Min"></td>
+                        <td><input type="text" class="text-center" name="Vozr_Max" value="@Model.Vozr_Max"></td>
+                        @if (Model.isShow == true)
+                        {
+                            <td class="td-color"><input id="vozr_Fakt" type="text" readonly class="text-center" value="@Model.Vozr_Fakt()"></td>
+                            <td class="td-color"><input type="text" readonly class="text-center" value="@Model.Vozr_KonSto()"></td>
+                        }
+                    </tr>
+                    <tr align="center">
+                        <td>Ферросилиций 45%</td>
+                        <td><input type="text" class="text-center" name="Ferr_Si" value="@Model.Ferr_Si"></td>
+                        <td><input type="text" class="text-center" name="Ferr_Mn" value="@Model.Ferr_Mn"></td>
+                        <td><input type="text" class="text-center" name="Ferr_Sto" value="@Model.Ferr_Sto"></td>
+                        <td><input type="text" class="text-center" name="Ferr_Min" value="@Model.Ferr_Min"></td>
+                        <td><input type="text" class="text-center" name="Ferr_Max" value="@Model.Ferr_Max"></td>
+                        @if (Model.isShow == true)
+                        {
+                            <td class="td-color"><input id="ferr_Fakt" type="text" readonly class="text-center" value="@Model.Ferr_Fakt()"></td>
+                            <td class="td-color"><input type="text" readonly class="text-center" value="@Model.Ferr_KonSto()"></td>
+                        }
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row d-flex align-items-center pt-1 pb-5">
+            <div class="col-lg-5">
+                <table class="table table-bordered">
+                    <tr align="center">
+                        <th class="text-center">Ограничения по элементам в конечном сплаве</th>
+                        <th class="text-center">Min, %</th>
+                        <th class="text-center">Max, %</th>
+                        @if (Model.isShow == true)
+                        {
+                            <th class="text-center td-color">Факт, %</th>
+                        }
+                    </tr>
+                    <tr align="center">
+                        <th class="text-center">Чугун литейный</th>
+                        <td><input type="text" class="text-center" name="SiT_Min" value="@Model.SiT_Min"></td>
+                        <td><input type="text" class="text-center" name="SiT_Max" value="@Model.SiT_Max"></td>
+                        @if (Model.isShow == true)
+                        {
+                            <td class="td-color"><input type="text" readonly class="text-center" value="@Model.Si_Fakt()"></td>
+                        }
+                    </tr>
+                    <tr align="center">
+                        <th class="text-center">Чугун литейный</th>
+                        <td><input type="text" class="text-center" name="MnT_Min" value="@Model.MnT_Min"></td>
+                        <td><input type="text" class="text-center" name="MnT_Max" value="@Model.MnT_Max"></td>
+                        @if (Model.isShow == true)
+                        {
+                            <td class="td-color"><input type="text" readonly class="text-center" value="@Model.Mn_Fakt()"></td>
+                        }
+                    </tr>
+                </table>
+            </div>
+            @if (Model.isShow == true)
+            {
+                <div class="col-lg-5">
+                    <table class="table table-bordered">
+                        <tr align="center">
+                            <th class="text-center td-color">Суммарная конечная стоимость компонентов шихты в сплаве, усл.ед./т</th>
+                        </tr>
+                        <tr align="center">
+                            <td class="td-color"><input type="text" readonly class="text-center" value="@Model.SumSto()"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-5">
+                    <div id="container"></div>
+                </div>
+            }
+        </div>
+        <input type="submit" class="btn btn-success" value="Расчитать" />
+    </form>
+</div>
